@@ -2,6 +2,7 @@ from pathlib import Path
 from lynx_engine.data import IGNORE
 import os
 import pathspec
+# import json
 
 class Evidence:
 
@@ -35,29 +36,36 @@ class Evidence:
             if data not in self.dependencies:
                 self.dependencies.append(data)
     
-    def display_data(self):
-        print("{")
-        print("'Files Extensions' : {")
-        for key,value in self.file_extension.items():
-            print(key," : ",value)
-        print("},")
+    # def display_data(self):
+    #     print("{")
+    #     print("'Files Extensions' : {")
+    #     for key,value in self.file_extension.items():
+    #         print(key," : ",value)
+    #     print("},")
         
-        print("'Files' : {")
-        for key,value in self.files.items():
-            print(key," : ",value)
-        print("},")
+    #     print("'Files' : {")
+    #     for key,value in self.files.items():
+    #         print(key," : ",value)
+    #     print("},")
 
         
-        print("'directories' : {")
-        for key,value in self.directories.items():
-            print(key," : ",value)
-        print("},")
+    #     print("'directories' : {")
+    #     for key,value in self.directories.items():
+    #         print(key," : ",value)
+    #     print("},")
 
-        print("'dependencies' : [")
-        for data in self.dependencies:
-            print(data,",")
-        print("]")
-        print("}")
+    #     print("'dependencies' : [")
+    #     for data in self.dependencies:
+    #         print(data,",")
+    #     print("]")
+    #     print("}")
+    
+    def export_evidence(self):
+        evidence_data = self.file_extension
+        return evidence_data
+
+    def export_files(self):
+        return self.files
 
 
 
@@ -87,6 +95,6 @@ def scan(path_dir: str) -> Evidence:
 
     return node
 
-def display(path: Path):
-    node = scan(path)
-    node.display_data()
+# def display(path: Path):
+#     node = scan(path)
+#     print(node.export_evidence())

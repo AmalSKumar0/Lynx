@@ -46,7 +46,6 @@ LANGUAGE_EXTENSIONS = {
     "json": [".json"],
     "toml": [".toml"],
     "ini": [".ini"],
-    "markdown": [".md", ".markdown"],
     "dockerfile": ["Dockerfile"],
     "makefile": ["Makefile"],
     "terraform": [".tf", ".tfvars"],
@@ -60,146 +59,151 @@ EXTENSION_TO_LANGUAGE = {
     for ext in extensions
 }
 
-EXTENSION_TO_FRAMEWORK = {
-    # Python
-    "manage.py": "django",
-    "wsgi.py": "django",
-    "asgi.py": "django",
-    "settings.py": "django",
-    "urls.py": "django",
-    "apps.py": "django",
-    "models.py": "django",
-    "views.py": "django",
-    "admin.py": "django",
-    "serializers.py": "django_rest_framework",
-    "routers.py": "django_rest_framework",
+FILES_TO_TECHNOLOGY = {
+    "frameworks": {
+        # Python
+        "manage.py": "django",
+        "wsgi.py": "django",
+        "asgi.py": "django",
+        "settings.py": "django",
+        "urls.py": "django",
+        "apps.py": "django",
+        "models.py": "django",
+        "views.py": "django",
+        "admin.py": "django",
 
-    "main.py": "fastapi",
-    "app.py": "fastapi",
-    "requirements.txt": "python",
-    "pyproject.toml": "python",
-    "poetry.lock": "python",
-    "uv.lock": "python",
-    "Pipfile": "python",
+        "main.py": "fastapi",
+        "app.py": "flask",
+        "run.py": "flask",
 
-    # Flask
-    "app.py": "flask",
-    "run.py": "flask",
+        # Laravel
+        "artisan": "laravel",
+        "routes/web.php": "laravel",
+        "routes/api.php": "laravel",
 
-    # Laravel
-    "artisan": "laravel",
-    "composer.json": "laravel",
-    "composer.lock": "laravel",
-    ".env.example": "laravel",
-    "routes/web.php": "laravel",
-    "routes/api.php": "laravel",
+        # React
+        "vite.config.js": "react",
+        "vite.config.ts": "react",
+        "react.config.js": "react",
+        "index.jsx": "react",
+        "index.tsx": "react",
+        "App.jsx": "react",
+        "App.tsx": "react",
 
-    # React
-    "package.json": "react",
-    "vite.config.js": "react",
-    "vite.config.ts": "react",
-    "react.config.js": "react",
-    "index.jsx": "react",
-    "index.tsx": "react",
-    "App.jsx": "react",
-    "App.tsx": "react",
+        # Next.js
+        "next.config.js": "nextjs",
+        "next.config.mjs": "nextjs",
+        "next.config.ts": "nextjs",
+        "_app.tsx": "nextjs",
+        "_document.tsx": "nextjs",
 
-    # Next.js
-    "next.config.js": "nextjs",
-    "next.config.mjs": "nextjs",
-    "next.config.ts": "nextjs",
-    "_app.tsx": "nextjs",
-    "_document.tsx": "nextjs",
-    "middleware.ts": "nextjs",
+        # Vue
+        "vue.config.js": "vue",
+        "App.vue": "vue",
 
-    # Vue
-    "vue.config.js": "vue",
-    "App.vue": "vue",
-    "main.js": "vue",
-    "main.ts": "vue",
+        # Angular
+        "angular.json": "angular",
+        "app.component.ts": "angular",
 
-    # Angular
-    "angular.json": "angular",
-    "main.ts": "angular",
-    "app.component.ts": "angular",
+        # Svelte
+        "svelte.config.js": "svelte",
+        "svelte.config.cjs": "svelte",
+        "App.svelte": "svelte",
 
-    # Svelte
-    "svelte.config.js": "svelte",
-    "svelte.config.cjs": "svelte",
-    "App.svelte": "svelte",
+        # NestJS
+        "nest-cli.json": "nestjs",
+        "app.module.ts": "nestjs",
 
-    # Node.js / Express
-    "server.js": "express",
-    "server.ts": "express",
-    "app.js": "express",
-    "app.ts": "express",
-    "index.js": "nodejs",
-    "index.ts": "nodejs",
+        # Nuxt
+        "nuxt.config.ts": "nuxt",
+        "nuxt.config.js": "nuxt",
 
-    # NestJS
-    "nest-cli.json": "nestjs",
-    "main.ts": "nestjs",
-    "app.module.ts": "nestjs",
+        # Remix
+        "remix.config.js": "remix",
+        "remix.config.ts": "remix",
 
-    # Nuxt
-    "nuxt.config.ts": "nuxt",
-    "nuxt.config.js": "nuxt",
+        # Astro
+        "astro.config.mjs": "astro",
+        "astro.config.ts": "astro",
 
-    # Remix
-    "remix.config.js": "remix",
-    "remix.config.ts": "remix",
+        # Spring
+        "pom.xml": "spring",
+        "build.gradle": "spring",
+        "build.gradle.kts": "spring",
 
-    # Astro
-    "astro.config.mjs": "astro",
-    "astro.config.ts": "astro",
+        # ASP.NET
+        "Program.cs": "aspnet",
+        "Startup.cs": "aspnet",
 
-    # Spring Boot
-    "pom.xml": "springboot",
-    "build.gradle": "springboot",
-    "build.gradle.kts": "springboot",
-    "application.properties": "springboot",
-    "application.yml": "springboot",
+        # Rails
+        "Gemfile": "rails",
+        "config.ru": "rails",
+        "Rakefile": "rails",
 
-    # ASP.NET
-    "Program.cs": "aspnet",
-    "Startup.cs": "aspnet",
-    "*.csproj": "aspnet",
+        # Phoenix
+        "mix.exs": "phoenix",
 
-    # Ruby on Rails
-    "Gemfile": "rails",
-    "config.ru": "rails",
-    "Rakefile": "rails",
+        # Flutter
+        "pubspec.yaml": "flutter",
+    },
 
-    # Phoenix
-    "mix.exs": "phoenix",
+    "libraries": {
+        "serializers.py": "django_rest_framework",
+        "routers.py": "django_rest_framework",
+    },
 
-    # Flutter
-    "pubspec.yaml": "flutter",
+    "runtimes": {
+        "index.js": "nodejs",
+        "index.ts": "nodejs",
+        "server.js": "nodejs",
+        "server.ts": "nodejs",
+    },
 
-    # Electron
-    "electron.js": "electron",
-    "electron.ts": "electron",
+    "tools": {
+        # Docker
+        "Dockerfile": "docker",
+        "docker-compose.yml": "docker",
+        "docker-compose.yaml": "docker",
 
-    # Tauri
-    "tauri.conf.json": "tauri",
+        # Kubernetes / Helm
+        "Chart.yaml": "helm",
+        "values.yaml": "helm",
 
-    # Docker
-    "Dockerfile": "docker",
-    "docker-compose.yml": "docker",
-    "docker-compose.yaml": "docker",
+        # Terraform
+        "main.tf": "terraform",
+        "providers.tf": "terraform",
+        "variables.tf": "terraform",
 
-    # Kubernetes
-    "Chart.yaml": "helm",
-    "values.yaml": "helm",
+        # Git
+        ".gitignore": "git",
+        ".gitattributes": "git",
 
-    # Terraform
-    "main.tf": "terraform",
-    "providers.tf": "terraform",
-    "variables.tf": "terraform",
+        # Electron
+        "electron.js": "electron",
+        "electron.ts": "electron",
 
-    # Git
-    ".gitignore": "git",
-    ".gitattributes": "git",
+        # Tauri
+        "tauri.conf.json": "tauri",
+    },
+
+    "package_managers": {
+        "package.json": "npm",
+        "package-lock.json": "npm",
+        "bun.lock": "bun",
+        "composer.json": "composer",
+        "composer.lock": "composer",
+        "poetry.lock": "poetry",
+        "Pipfile": "pipenv",
+        "uv.lock": "uv",
+    },
+
+    "configuration": {
+        "pyproject.toml": "python",
+        "requirements.txt": "python",
+        ".env.example": "environment",
+        "application.properties": "spring",
+        "application.yml": "spring",
+    },
 }
 
 IGNORE = {
