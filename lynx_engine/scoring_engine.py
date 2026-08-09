@@ -1,15 +1,14 @@
-from lynx_engine.evidence_collector import Evidence,scan
-from lynx_engine.data import EXTENSION_TO_LANGUAGE,FILES_TO_TECHNOLOGY
-
-import sys
+import os
+from lynx_engine.evidence_collector import Evidence, scan
+from lynx_engine.data import EXTENSION_TO_LANGUAGE, FILES_TO_TECHNOLOGY
 
 
 class Score:
     def __init__(self):
         self.language = {
-            "primary":[],
-            "secondary":[],
-            "supporting":[]
+            "primary": [],
+            "secondary": [],
+            "supporting": []
         }
         self.frameworks = {}
         self.libraries = {}
@@ -17,11 +16,10 @@ class Score:
         self.tools = {}
         self.package_managers = {}
         self.configuration = {}
+        self.file_read_data = {}
     
-
-    def load_languages(self,language_raw_data: dict):
-
-        for key,value in language_raw_data.items():
+    def load_languages(self, language_raw_data: dict):
+        for key, value in language_raw_data.items():
             if value >= 50:
                 self.language["primary"].append(key)
             elif value >= 10:
@@ -30,77 +28,88 @@ class Score:
                 self.language["supporting"].append(key)
 
     def display(self):
+        return self.__dict__
 
-        print(self.__dict__)
+    def putting_data(self, category, technology, count):
+        target = getattr(self, category)
+        target[technology] = target.get(technology, 0) + count
 
-    def putting_data(self,category,technology,count):
-            target = getattr(self, category)
-            target[technology] = target.get(technology, 0) + count
-            
-# Helper function to clean languages less tahn 1% presence in the folder
+
+# Helper function to clean languages less than 1% presence in the folder
 def filter_languages(languages):
     return {
-        key:value
-        for key,value in languages.items()
+        key: value
+        for key, value in languages.items()
         if value >= 1.0 
     }
 
 
-def language_scoring_engine(Language_raw_data: dict,score: Score):
+def language_scoring_engine(language_raw_data: dict, score: Score):
     lang = {}
     total = 0
     
-    for key,value in Language_raw_data.items():
+    for key, value in language_raw_data.items():
         language = EXTENSION_TO_LANGUAGE.get(key)
-        if language == None:
+        if language is None:
             continue
         
         total += value
-        if language in lang:
-            lang[language] += value
-        else:
-            lang[language] = value
+        lang[language] = lang.get(language, 0) + value
     
-    for key,value in lang.items():
-        percentage = (value/total)*100
-        lang[key] = percentage
+    if total > 0:
+        for key, value in lang.items():
+            lang[key] = (value / total) * 100
 
     lang = filter_languages(lang)
     score.load_languages(lang)
 
+
+# Pre-parse FILES_TO_TECHNOLOGY for O(1) basename lookup and fast suffix path matching
+BASENAME_TO_TECH = {}
+SUFFIX_TO_TECH = {}
+TECH_TO_CATEGORY = {}
+
+for category, file_map in FILES_TO_TECHNOLOGY.items():
+    for path_key, tech in file_map.items():
+        TECH_TO_CATEGORY[tech] = category
+        if '/' in path_key:
+            SUFFIX_TO_TECH[path_key] = (category, tech)
+        else:
+            BASENAME_TO_TECH[path_key] = (category, tech)
+
+
+def dependency_scoring_engine(dependencies_raw_data, score):
+    for tech, count in dependencies_raw_data.items():
+        category = TECH_TO_CATEGORY.get(tech, "libraries")
+        score.putting_data(category, tech, count)
+
+
 def framework_scoring_engine(files_raw_data, score):
-    categories = [
-        "frameworks",
-        "libraries",
-        "runtimes",
-        "tools",
-        "package_managers",
-        "configuration",
-    ]
-
-    for filename, count in files_raw_data.items():
-
-        for category in categories:
-            technology = FILES_TO_TECHNOLOGY[category].get(filename)
-
-            if technology is not None:
-                score.putting_data(
-                    category,
-                    technology,
-                    count
-                )
+    for rel_path, count in files_raw_data.items():
+        basename = os.path.basename(rel_path)
+        
+        # Match basename first
+        if basename in BASENAME_TO_TECH:
+            category, technology = BASENAME_TO_TECH[basename]
+            score.putting_data(category, technology, count)
+            continue
+            
+        # Match suffix path next
+        for suffix, (category, technology) in SUFFIX_TO_TECH.items():
+            if rel_path.endswith(suffix):
+                score.putting_data(category, technology, count)
+                break
 
 
-def main():
-    path = "~/College Projects/noir"
+def scoreingEngine(evidence: Evidence):
     score = Score()
-    evidence = scan(path)
     data = evidence.export_evidence()
-    language_scoring_engine(data,score)
-
+    language_scoring_engine(data, score)
+    score.file_read_data = evidence.export_dependencies()
+    dependency_scoring_engine(score.file_read_data, score)
     data = evidence.export_files()
-    framework_scoring_engine(data,score)
-    score.display()
+    framework_scoring_engine(data, score)
+    return score
 
-if __name__ == "__main__":
-    main()
+
+

@@ -5,8 +5,6 @@ LANGUAGE_EXTENSIONS = {
     "php": [".php", ".phtml"],
     "java": [".java"],
     "kotlin": [".kt", ".kts"],
-    "scala": [".scala"],
-    "groovy": [".groovy"],
     "c": [".c", ".h"],
     "c++": [".cpp", ".cc", ".cxx", ".hpp", ".hh", ".hxx"],
     "c#": [".cs"],
@@ -15,42 +13,18 @@ LANGUAGE_EXTENSIONS = {
     "swift": [".swift"],
     "dart": [".dart"],
     "ruby": [".rb"],
-    "perl": [".pl", ".pm"],
-    "r": [".r"],
-    "lua": [".lua"],
-    "shell": [".sh", ".bash", ".zsh"],
-    "powershell": [".ps1"],
-    "objective-c": [".m", ".mm"],
-    "objective-c++": [".mm"],
-    "elixir": [".ex", ".exs"],
-    "erlang": [".erl", ".hrl"],
-    "haskell": [".hs"],
-    "ocaml": [".ml", ".mli"],
-    "f#": [".fs", ".fsi", ".fsx"],
-    "clojure": [".clj", ".cljs", ".cljc"],
-    "nim": [".nim"],
-    "zig": [".zig"],
-    "julia": [".jl"],
-    "fortran": [".f", ".f90", ".f95"],
-    "matlab": [".m"],
     "sql": [".sql"],
     "html": [".html", ".htm"],
-    "css": [".css"],
-    "scss": [".scss"],
-    "sass": [".sass"],
-    "less": [".less"],
+    "css": [".css", ".scss", ".sass"],
     "vue": [".vue"],
     "svelte": [".svelte"],
     "xml": [".xml"],
     "yaml": [".yaml", ".yml"],
     "json": [".json"],
     "toml": [".toml"],
-    "ini": [".ini"],
     "dockerfile": ["Dockerfile"],
     "makefile": ["Makefile"],
     "terraform": [".tf", ".tfvars"],
-    "protobuf": [".proto"],
-    "graphql": [".graphql", ".gql"],
 }
 
 EXTENSION_TO_LANGUAGE = {
@@ -71,7 +45,6 @@ FILES_TO_TECHNOLOGY = {
         "models.py": "django",
         "views.py": "django",
         "admin.py": "django",
-
         "main.py": "fastapi",
         "app.py": "flask",
         "run.py": "flask",
@@ -81,69 +54,37 @@ FILES_TO_TECHNOLOGY = {
         "routes/web.php": "laravel",
         "routes/api.php": "laravel",
 
-        # React
+        # React / Next / Vue / Angular / Svelte
         "vite.config.js": "react",
         "vite.config.ts": "react",
-        "react.config.js": "react",
         "index.jsx": "react",
         "index.tsx": "react",
         "App.jsx": "react",
         "App.tsx": "react",
-
-        # Next.js
         "next.config.js": "nextjs",
         "next.config.mjs": "nextjs",
         "next.config.ts": "nextjs",
-        "_app.tsx": "nextjs",
-        "_document.tsx": "nextjs",
-
-        # Vue
         "vue.config.js": "vue",
         "App.vue": "vue",
-
-        # Angular
         "angular.json": "angular",
         "app.component.ts": "angular",
-
-        # Svelte
         "svelte.config.js": "svelte",
-        "svelte.config.cjs": "svelte",
         "App.svelte": "svelte",
-
-        # NestJS
         "nest-cli.json": "nestjs",
         "app.module.ts": "nestjs",
-
-        # Nuxt
         "nuxt.config.ts": "nuxt",
         "nuxt.config.js": "nuxt",
-
-        # Remix
         "remix.config.js": "remix",
         "remix.config.ts": "remix",
-
-        # Astro
         "astro.config.mjs": "astro",
         "astro.config.ts": "astro",
 
-        # Spring
+        # Spring / ASP.NET / Rails / Flutter
         "pom.xml": "spring",
         "build.gradle": "spring",
-        "build.gradle.kts": "spring",
-
-        # ASP.NET
         "Program.cs": "aspnet",
         "Startup.cs": "aspnet",
-
-        # Rails
         "Gemfile": "rails",
-        "config.ru": "rails",
-        "Rakefile": "rails",
-
-        # Phoenix
-        "mix.exs": "phoenix",
-
-        # Flutter
         "pubspec.yaml": "flutter",
     },
 
@@ -160,29 +101,14 @@ FILES_TO_TECHNOLOGY = {
     },
 
     "tools": {
-        # Docker
         "Dockerfile": "docker",
         "docker-compose.yml": "docker",
         "docker-compose.yaml": "docker",
-
-        # Kubernetes / Helm
         "Chart.yaml": "helm",
         "values.yaml": "helm",
-
-        # Terraform
         "main.tf": "terraform",
-        "providers.tf": "terraform",
-        "variables.tf": "terraform",
-
-        # Git
         ".gitignore": "git",
-        ".gitattributes": "git",
-
-        # Electron
         "electron.js": "electron",
-        "electron.ts": "electron",
-
-        # Tauri
         "tauri.conf.json": "tauri",
     },
 
@@ -191,7 +117,6 @@ FILES_TO_TECHNOLOGY = {
         "package-lock.json": "npm",
         "bun.lock": "bun",
         "composer.json": "composer",
-        "composer.lock": "composer",
         "poetry.lock": "poetry",
         "Pipfile": "pipenv",
         "uv.lock": "uv",
@@ -215,4 +140,208 @@ IGNORE = {
     ".venv",
     "venv",
     ".env",
+}
+
+STACK_EVIDENCE = {
+    # Strong — 30
+    "requirements.txt": 30,
+    "pyproject.toml": 30,
+    "Pipfile": 30,
+    "package.json": 30,
+    "composer.json": 30,
+    "pom.xml": 30,
+    "build.gradle": 30,
+    "Cargo.toml": 30,
+    "go.mod": 30,
+    "Gemfile": 30,
+    "pubspec.yaml": 30,
+    "*.csproj": 30,
+
+    # Medium — 20
+    "setup.py": 20,
+    "setup.cfg": 20,
+    "manage.py": 20,
+    "artisan": 20,
+    "next.config.js": 20,
+    "next.config.mjs": 20,
+    "next.config.ts": 20,
+    "vite.config.js": 20,
+    "vite.config.ts": 20,
+    "angular.json": 20,
+    "vue.config.js": 20,
+    "svelte.config.js": 20,
+    "nest-cli.json": 20,
+    "Dockerfile": 20,
+    "docker-compose.yml": 20,
+    "docker-compose.yaml": 20,
+    "*.tf": 20,
+
+    # Weak — 10
+    "settings.py": 10,
+    "wsgi.py": 10,
+    "asgi.py": 10,
+    "application.properties": 10,
+    "application.yml": 10,
+    "config.ru": 10,
+    "Rakefile": 10,
+
+    # Very weak — 5
+    "urls.py": 5,
+    "models.py": 5,
+    "views.py": 5,
+    "serializers.py": 5,
+    "routers.py": 5,
+    "App.jsx": 5,
+    "App.tsx": 5,
+    "App.vue": 5,
+    "index.jsx": 5,
+    "index.tsx": 5,
+    "main.py": 5,
+    "main.ts": 5,
+    "app.py": 5,
+    "server.js": 5,
+    "server.ts": 5,
+    "app.module.ts": 5,
+    "Program.cs": 5,
+    "Startup.cs": 5,
+
+    # Lock files — 3
+    "uv.lock": 3,
+    "poetry.lock": 3,
+    "Pipfile.lock": 3,
+    "package-lock.json": 3,
+    "yarn.lock": 3,
+    "pnpm-lock.yaml": 3,
+    "bun.lock": 3,
+    "composer.lock": 3,
+    "Cargo.lock": 3,
+    "go.sum": 3,
+    "Gemfile.lock": 3,
+    "pubspec.lock": 3,
+
+    # Generic language evidence — 1
+    "*.py": 1,
+    "*.js": 1,
+    "*.jsx": 1,
+    "*.ts": 1,
+    "*.tsx": 1,
+    "*.java": 1,
+    "*.kt": 1,
+    "*.go": 1,
+    "*.rs": 1,
+    "*.rb": 1,
+    "*.php": 1,
+    "*.cs": 1,
+    "*.cpp": 1,
+    "*.c": 1,
+    "*.swift": 1,
+    "*.dart": 1,
+}
+
+DEPENDENCY_KEYWORDS = {
+    # Python
+    "django": "django",
+    "djangorestframework": "django_rest_framework",
+    "fastapi": "fastapi",
+    "flask": "flask",
+    "celery": "celery",
+    "uvicorn": "uvicorn",
+    "gunicorn": "gunicorn",
+    "sqlalchemy": "sqlalchemy",
+    "pydantic": "pydantic",
+    "redis": "redis",
+    "psycopg": "postgresql",
+    "psycopg2": "postgresql",
+    "mysqlclient": "mysql",
+    "pymysql": "mysql",
+    "pymongo": "mongodb",
+
+    # JavaScript / TypeScript
+    "react": "react",
+    "react-dom": "react",
+    "next": "nextjs",
+    "vue": "vue",
+    "nuxt": "nuxt",
+    "angular": "angular",
+    "@angular/core": "angular",
+    "svelte": "svelte",
+    "@sveltejs/kit": "sveltekit",
+    "express": "express",
+    "@nestjs/core": "nestjs",
+    "vite": "vite",
+    "webpack": "webpack",
+    "parcel": "parcel",
+    "astro": "astro",
+    "@remix-run": "remix",
+    "electron": "electron",
+    "react-native": "react_native",
+    "expo": "expo",
+    "tailwindcss": "tailwindcss",
+    "axios": "axios",
+    "socket.io": "socketio",
+
+    # PHP
+    "laravel/framework": "laravel",
+    "symfony/framework-bundle": "symfony",
+    "slim/slim": "slim",
+    "guzzlehttp/guzzle": "guzzle",
+
+    # Java / Kotlin
+    "org.springframework": "spring",
+    "spring-boot": "springboot",
+    "spring-boot-starter-web": "springboot",
+    "spring-boot-starter-data-jpa": "spring_data_jpa",
+    "hibernate": "hibernate",
+    "io.quarkus": "quarkus",
+    "io.micronaut": "micronaut",
+
+    # Ruby
+    "rails": "rails",
+    "sinatra": "sinatra",
+    "devise": "devise",
+
+    # Rust
+    "axum": "axum",
+    "actix-web": "actix",
+    "rocket": "rocket",
+    "tokio": "tokio",
+    "serde": "serde",
+
+    # Go
+    "gin-gonic/gin": "gin",
+    "labstack/echo": "echo",
+    "gofiber/fiber": "fiber",
+    "gorilla/mux": "gorilla",
+    "gorm.io/gorm": "gorm",
+
+    # .NET
+    "Microsoft.AspNetCore": "aspnet",
+    "Microsoft.EntityFrameworkCore": "entity_framework",
+    "Newtonsoft.Json": "json_dotnet",
+
+    # Flutter / Dart
+    "flutter": "flutter",
+    "cupertino_icons": "flutter",
+    "provider": "provider",
+    "bloc": "bloc",
+    "flutter_bloc": "flutter_bloc",
+    "riverpod": "riverpod",
+
+    # Databases
+    "mongodb": "mongodb",
+    "mongoose": "mongodb",
+    "sequelize": "sequelize",
+    "prisma": "prisma",
+    "typeorm": "typeorm",
+    "drizzle-orm": "drizzle",
+    "knex": "knex",
+    "mysql": "mysql",
+    "postgres": "postgresql",
+    "postgresql": "postgresql",
+    "sqlite": "sqlite",
+
+    # Infrastructure
+    "docker": "docker",
+    "terraform": "terraform",
+    "kubernetes": "kubernetes",
 }
